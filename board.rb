@@ -7,6 +7,10 @@ class Board
     @tiles[x,y]
   end
 
+  def []= x, y, value
+    @tiles[x,y] = value
+  end
+
   def to_s
 
   end
