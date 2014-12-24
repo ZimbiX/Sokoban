@@ -21,6 +21,11 @@ class Tile
     piece.tile = self
   end
 
+  def take piece
+    @inhabitants.delete piece
+    piece.tile = nil
+  end
+
   def free?
     @inhabitants.keep_if { |x| SOLID_PIECES.include? x.class.name.to_symbol }.empty?
   end
