@@ -1,6 +1,20 @@
+require 'matrix'
+
+class Matrix
+  # Make Matrix mutable
+  public :"[]=", :set_element, :set_component
+
+  def render h_separator, v_separator
+    # Transpose (swap axis) so we can iterate over rows first
+    self.transpose.to_a.map { |row| row.join h_separator }.join v_separator
+  end
+end
+
 class Board
+
   def initialize width, height
-    @tiles = Matrix.build(width, height) { Tile.new }
+    # Argument order is y,x: Matrix.build(rows, columns)
+    @tiles = Matrix.build(height, width) { Tile.new }
   end
 
   def [] x, y
@@ -12,7 +26,7 @@ class Board
   end
 
   def to_s
-
+    @tiles.render " ", "\n"
   end
 
   def self.load_from_file file_path
