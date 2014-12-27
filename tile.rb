@@ -16,7 +16,7 @@ class Tile
   # All logic for a piece arriving at a tile
   def place piece
     @inhabitants << piece
-    @inhabitants.sort_by! { |p| p.to_s }
+    @inhabitants.sort_by! { |p| p.class.name }
     piece.tile = self
   end
 
