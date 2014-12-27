@@ -6,9 +6,9 @@ DOWN  = [ 0, 1]
 SOLID_PIECES = [:Wall, :Box]
 
 GAME_ASCII = {
-  Player:      '$',
-  Wall:        '#',
-  Goal:        '-',
-  Box:         '0',
-  Box_on_Goal: '8',
+  [:Player]     => '$',
+  [:Wall]       => '#',
+  [:Goal]       => '-',
+  [:Box]        => '0',
+  [:Box, :Goal] => '8',
 }

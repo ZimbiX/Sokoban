@@ -1,26 +1,27 @@
 class Tile
   def initialize tile_content = nil
     @inhabitants = []
-    case tile_content
-    when GAME_ASCII[:Player]
-      place Player.new
-    when GAME_ASCII[:Wall]
-      place Wall.new
-    when GAME_ASCII[:Box]
-      place Box.new
-    when GAME_ASCII[:Goal]
-      place Goal.new
-    when GAME_ASCII[:Box_on_Goal]
-      place Goal.new
-      place Box.new
+    objs = (
+      case tile_content.class
+      when String
+        GAME_ASCII.key(tile_content)
+      when Array
+        tile_content
+      end
+    )
+    objs && objs.each do |obj|
+      Kernel.const_get(obj).new(self)
     end
   end
 
+  # All logic for a piece arriving at a tile
   def place piece
     @inhabitants << piece
+    @inhabitants.sort_by! { |p| p.to_s }
     piece.tile = self
   end
 
+  # All logic for a piece leaving a tile
   def take piece
     @inhabitants.delete piece
     piece.tile = nil
