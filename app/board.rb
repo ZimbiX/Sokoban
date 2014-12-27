@@ -6,11 +6,17 @@ class Matrix
 
   def to_a_of_rows
     # Transpose (swap axis) so we are given an array of rows rather than an array of columns
-    self.transpose.to_a
+    transpose.to_a
   end
 
   def render h_separator, v_separator
-    self.to_a_of_rows.map { |row| row.join h_separator }.join v_separator
+    to_a_of_rows.map { |row| row.join h_separator }.join v_separator
+  end
+
+  # Allow prevention of Matrix's handling of negative coordinates
+  def coordinates_valid? x, y
+    (0..row_size-1).include?(x) &&
+    (0..column_size-1).include?(y)
   end
 end
 
@@ -21,11 +27,20 @@ class Board
   end
 
   def [] x, y
-    @tiles[x,y]
+    if @tiles.coordinates_valid? x, y
+      @tiles[x,y]
+    else
+      nil
+    end
   end
 
   def []= x, y, value
-    @tiles[x,y] = value
+    if @tiles.coordinates_valid? x, y
+      @tiles[x,y] = value
+    else
+      # Invalid coordinates during assignment is not ok
+      raise ArgumentError.new "Invalid coordinates"
+    end
   end
 
   def to_s
