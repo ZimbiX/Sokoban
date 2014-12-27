@@ -29,4 +29,8 @@ class Tile
   def free?
     @inhabitants.keep_if { |x| SOLID_PIECES.include? x.class.name.to_symbol }.empty?
   end
+
+  def inhabitants_classes
+    inhabitants.map { |p| p.class }
+  end
 end
