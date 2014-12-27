@@ -51,6 +51,7 @@ class Tile
 
   # Attempts to recursively move/shove this tile's solid inhabitant in the given direction, and returns whether this was successful
   def move_solid_inhabitant direction, shove_power
+    puts 'move_solid_inhabitant'
     if free?
       true # Nothing to move; all good for something to move into this tile
     elsif shove_power == 0

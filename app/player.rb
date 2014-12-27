@@ -1,5 +1,12 @@
 class Player < Piece
-  def move direction
+  attr_accessor :shove_power
 
+  def initialize initial_tile = nil
+    @shove_power = 1
+    super(initial_tile)
+  end
+
+  def move direction
+    tile.move_solid_inhabitant direction, shove_power
   end
 end

@@ -39,4 +39,13 @@ describe Board do
       board.tile_coordinates(tile).must_equal nil
     end
   end
+
+  describe ".adjacent_tile" do
+    it "works when given a valid tile and direction" do
+      board = Board.new 3, 3
+      tile_start = board[1,1]
+      board.adjacent_tile(tile_start, LEFT ).must_equal board[0,1]
+      board.adjacent_tile(tile_start, [0,1]).must_equal board[1,2]
+    end
+  end
 end

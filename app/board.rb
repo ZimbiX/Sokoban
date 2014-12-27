@@ -74,7 +74,13 @@ class Board
     return nil
   end
 
-  def adjacent_tile tile, direction
+  def adjacent_tile_coordinates tile, direction
+    coords = Vector.elements(tile_coordinates tile)
+    coords_adjacent = coords + Vector.elements(direction)
+    coords_adjacent.to_a
+  end
 
+  def adjacent_tile tile, direction
+    self[*adjacent_tile_coordinates(tile, direction)]
   end
 end
