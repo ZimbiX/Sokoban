@@ -1,4 +1,5 @@
-require File.expand_path '../spec_helper.rb', __FILE__
+require 'require_all'
+require_rel './spec_helper.rb'
 
 describe Tile do
   describe ".initialize" do
