@@ -1,3 +1,3 @@
-class Box
+class Box < Piece
 
 end

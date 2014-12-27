@@ -1,3 +1,3 @@
-class Goal
+class Goal < Piece
 
 end

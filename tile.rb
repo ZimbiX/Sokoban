@@ -1,14 +1,13 @@
 class Tile
+  attr_accessor :inhabitants
+
   def initialize tile_content = nil
     @inhabitants = []
-    objs = (
-      case tile_content.class
-      when String
-        GAME_ASCII.key(tile_content)
-      when Array
-        tile_content
+    objs =
+      case tile_content
+      when String then GAME_ASCII.key(tile_content)
+      when Array then tile_content
       end
-    )
     objs && objs.each do |obj|
       Kernel.const_get(obj).new(self)
     end
