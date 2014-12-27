@@ -27,4 +27,16 @@ describe Tile do
       tile.inhabitants_classes.must_equal [Box, Goal]
     end
   end
+
+  describe ".take" do
+    it "can remove a piece from the tile" do
+      [Box, Player].each do |piece_class|
+        tile = Tile.new
+        piece = piece_class.new tile
+        tile.inhabitants_classes.must_equal [piece_class]
+        tile.take.must_equal piece
+        tile.inhabitants_classes.must_equal []
+      end
+    end
+  end
 end
