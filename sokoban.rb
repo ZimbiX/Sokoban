@@ -3,13 +3,8 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require './setup'
-require './piece'
-require './board'
-require './tile'
-require './player'
-require './box'
-require './goal'
+require 'require_all'
+require_rel 'app'
 
 if __FILE__ == $0
   tile1 = Tile.new
