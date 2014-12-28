@@ -19,6 +19,13 @@ describe Tile do
       tile = Tile.new goal, box
       tile.inhabitants_classes.must_equal [Box, Goal]
     end
+
+    it "can create/add mixed inhabitant types as specified" do
+      tile = Tile.new Box.new, :Goal
+      tile.inhabitants_classes.must_equal [Box, Goal]
+      tile = Tile.new :Goal, '$'
+      tile.inhabitants_classes.must_equal [Goal, Player]
+    end
   end
 
   describe ".place" do
