@@ -7,6 +7,7 @@ class Player < Piece
   end
 
   def move direction
-    tile.move_solid_inhabitant direction, shove_power
+    # Add shove power so the player can be moved too
+    tile.move_solid_inhabitant direction, shove_power+1
   end
 end
