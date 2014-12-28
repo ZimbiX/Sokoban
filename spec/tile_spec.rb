@@ -44,7 +44,7 @@ describe Tile do
     describe "when there is no board" do
       it "raises a TypeError" do
         tile = Tile.new
-        tile.adjacent_tile(RIGHT).must_raise TypeError
+        proc { tile.adjacent_tile(RIGHT) }.must_raise TypeError
       end
     end
 
