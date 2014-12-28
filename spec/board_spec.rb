@@ -48,4 +48,14 @@ describe Board do
       board.adjacent_tile(tile_start, [0,1]).must_equal board[1,2]
     end
   end
+
+  describe ".new_tile" do
+    it "returns a new tile with the board assigned" do
+      board = Board.new 2, 2
+      tile = board.new_tile
+      tile.must_be_instance_of Tile
+      tile.board.must_equal board
+      Tile.new.board.must_equal nil
+    end
+  end
 end
