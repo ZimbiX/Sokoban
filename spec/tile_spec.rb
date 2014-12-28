@@ -39,4 +39,38 @@ describe Tile do
       end
     end
   end
+
+  describe ".adjacent_tile" do
+    describe "when there is no board" do
+      it "raises a TypeError" do
+        tile = Tile.new
+        tile.adjacent_tile(RIGHT).must_raise TypeError
+      end
+    end
+
+    describe "when there is a board" do
+      it "returns the adjacent tile when it exists" do
+        board = Board.new 3, 3
+        tile = board.new_tile
+        board[1,1] = tile
+        {
+          [1,0] => UP,
+          [1,2] => DOWN,
+          [2,1] => RIGHT,
+          [0,1] => LEFT,
+        }.each do |coords, direction|
+          tile.adjacent_tile(direction).must_equal board[*coords]
+        end
+      end
+
+      it "return nil when there is no tile in the given direction" do
+        board = Board.new 1, 1
+        tile = board.new_tile
+        board[0,0] = tile
+        [UP, DOWN, RIGHT, LEFT].each do |direction|
+          tile.adjacent_tile(direction).must_equal nil
+        end
+      end
+    end
+  end
 end
