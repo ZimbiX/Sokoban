@@ -2,6 +2,13 @@ require 'require_all'
 require_rel './spec_helper.rb'
 
 describe Board do
+  describe ".new" do
+    it "assigns the board to the new tiles" do
+      board = Board.new 1, 1
+      board[0,0].board.must_equal board
+    end
+  end
+
   describe "assigning and returning a tile" do
     it "works for valid coordinates" do
       board = Board.new 3, 3
@@ -22,6 +29,17 @@ describe Board do
         board[*invalid_coord].must_equal nil
         proc { board[*invalid_coord] = '' }.must_raise ArgumentError
       end
+    end
+
+    it "updates tile ownership" do
+      board = Board.new 2, 2
+      tile_old = board[0,0]
+      tile_new = Tile.new
+      tile_old.board.must_equal board
+      tile_new.board.must_equal nil
+      board[0,0] = tile_new
+      tile_old.board.must_equal nil
+      tile_new.board.must_equal board
     end
   end
 

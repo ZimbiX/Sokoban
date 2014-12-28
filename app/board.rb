@@ -23,7 +23,11 @@ end
 class Board
   def initialize width, height
     # Argument order is y,x: Matrix.build(rows, columns)
-    @tiles = Matrix.build(height, width) { Tile.new }
+    @tiles = Matrix.build(height, width) do
+      Tile.new.tap do |tile|
+        tile.board = self
+      end
+    end
   end
 
   def [] x, y
@@ -36,7 +40,12 @@ class Board
 
   def []= x, y, value
     if @tiles.coordinates_valid? x, y
+      # Disown old tile
+      @tiles[x,y].board = nil
+      # Add new tile
       @tiles[x,y] = value
+      # Own new tile
+      value.board = self
     else
       # Invalid coordinates during assignment is not ok
       raise ArgumentError.new "Invalid coordinates"
