@@ -9,14 +9,14 @@ describe Tile do
     end
 
     it "creates inhabitants from class symbol array" do
-      tile = Tile.new [:Box, :Goal]
+      tile = Tile.new :Box, :Goal
       tile.inhabitants_classes.must_equal [Box, Goal]
     end
   end
 
   describe ".place" do
     let(:tile) do
-      Tile.new([:Goal]).tap { |tile| Box.new tile }
+      Tile.new(:Goal).tap { |tile| Box.new tile }
     end
 
     it "can add a second inhabitant" do

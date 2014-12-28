@@ -4,8 +4,7 @@ class Tile
 
   def initialize *tile_content_args
     @inhabitants = []
-    # Flatten (legacy support TODO: remove) and remove nils
-    tile_content = tile_content_args.flatten.compact
+    tile_content = tile_content_args.compact # Remove nils
 
     # Existing pieces to add to this tile
     pieces = tile_content.select { |x| x.is_a? Piece }
