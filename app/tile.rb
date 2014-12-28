@@ -81,6 +81,11 @@ class Tile
         # Move this piece to the next tile
         piece = take
         adjacent_tile(direction).place piece
+        # Moving succeeded from the bottom up
+        true
+      else
+        # Moving something failed; nothing was moved
+        false
       end
     end
   end

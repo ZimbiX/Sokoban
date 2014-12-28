@@ -87,4 +87,62 @@ describe Tile do
       end
     end
   end
+
+  describe ".move_solid_inhabitant" do
+    let(:row_tri_inhabitants) do
+      # Wrapped in another proc to avoid result caching
+      proc do |board|
+        [
+          board[0,0],
+          board[1,0],
+          board[2,0],
+        ].map &:solid_inhabitant
+      end
+    end
+
+    describe "without a player" do
+      it "can move a box" do
+        board = Board.new 3, 3
+        box = Box.new board[0,0]
+        row_tri_inhabitants.call(board).must_equal [box, nil, nil]
+        move_success = board[0,0].move_solid_inhabitant RIGHT, 1
+        move_success.must_equal true
+        row_tri_inhabitants.call(board).must_equal [nil, box, nil]
+      end
+
+      it "can't move two boxes with a shove power of 1" do
+        board = Board.new 3, 3
+        box1 = Box.new board[0,0]
+        box2 = Box.new board[1,0]
+        row_tri_inhabitants.call(board).must_equal [box1, box2, nil]
+        move_success = board[0,0].move_solid_inhabitant RIGHT, 1
+        move_success.must_equal false
+        row_tri_inhabitants.call(board).must_equal [box1, box2, nil]
+      end
+
+      it "can move two boxes with a shove power of 2" do
+        board = Board.new 3, 3
+        box1 = Box.new board[0,0]
+        box2 = Box.new board[1,0]
+        row_tri_inhabitants.call(board).must_equal [box1, box2, nil]
+        move_success = board[0,0].move_solid_inhabitant RIGHT, 2
+        move_success.must_equal true
+        row_tri_inhabitants.call(board).must_equal [nil, box1, box2]
+      end
+    end
+
+    describe "with a player" do
+      it "can move the player and a box when the path is clear" do
+        board = Board.new 3, 3
+        player = Player.new
+        board[0,0] = Tile.new player
+        box = Box.new
+        board[1,0].place box
+        row_tri_inhabitants.call(board).must_equal [player, box, nil]
+        move_success = player.move RIGHT
+        move_success.must_equal true
+        row_tri_inhabitants.call(board).must_equal [nil, player, box]
+      end
+    end
+  end
 end
