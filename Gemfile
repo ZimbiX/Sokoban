@@ -6,6 +6,8 @@ gem 'require_all'
 
 group :development do
   gem 'jazz_hands'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
   gem 'guard-minitest'
 end
 
