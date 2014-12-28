@@ -46,7 +46,11 @@ class Tile
   end
 
   def adjacent_tile direction
-    board.adjacent_tile self, direction
+    if board
+      board.adjacent_tile self, direction
+    else
+      raise TypeError.new "Tile has no board"
+    end
   end
 
   # Attempts to recursively move/shove this tile's solid inhabitant in the given direction, and returns whether this was successful
