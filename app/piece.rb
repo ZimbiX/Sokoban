@@ -9,8 +9,4 @@ class Piece
   def solid?
     SOLID_PIECES.include? self.class.name.to_sym
   end
-
-  def to_s
-    GAME_ASCII[self.class.name.to_sym]
-  end
 end

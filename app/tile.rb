@@ -56,6 +56,10 @@ class Tile
     inhabitants.map &:class
   end
 
+  def inhabitants_classes_symbols
+    inhabitants_classes.map { |c| c.name.to_sym }
+  end
+
   def adjacent_tile direction
     if board
       board.adjacent_tile self, direction
@@ -79,5 +83,9 @@ class Tile
         adjacent_tile(direction).place piece
       end
     end
+  end
+
+  def to_s
+    GAME_ASCII[inhabitants_classes_symbols]
   end
 end
