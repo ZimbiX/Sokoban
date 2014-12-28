@@ -44,7 +44,7 @@ describe Tile do
     it "can't add a second solid inhabitant" do
       tile = Tile.new :Player
       err = ->{ tile.place Box.new }.must_raise RuntimeError
-      err.message.must_match /already has a solid inhabitant/
+      err.message.must_match /Tile already has a solid inhabitant/
     end
   end
 
@@ -62,9 +62,10 @@ describe Tile do
 
   describe ".adjacent_tile" do
     describe "when there is no board" do
-      it "raises a TypeError" do
+      it "raises a RuntimeError" do
         tile = Tile.new
-        proc { tile.adjacent_tile(RIGHT) }.must_raise TypeError
+        err = ->{ tile.adjacent_tile(RIGHT) }.must_raise RuntimeError
+        err.message.must_match /Tile has no board/
       end
     end
 

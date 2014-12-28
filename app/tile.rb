@@ -66,7 +66,7 @@ class Tile
     if board
       board.adjacent_tile self, direction
     else
-      raise TypeError.new "Tile has no board"
+      raise "Tile has no board"
     end
   end
 
