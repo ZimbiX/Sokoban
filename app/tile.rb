@@ -27,7 +27,9 @@ class Tile
 
   # All logic for a piece arriving at a tile -- any solidity
   def place piece
-    if free? or not piece.solid?
+    if piece.solid? && solid_inhabitant
+      raise "Tile already has a solid inhabitant"
+    else
       inhabitants << piece
       inhabitants.sort_by! { |p| p.class.name }
       piece.tile = self

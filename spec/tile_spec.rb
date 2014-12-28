@@ -33,12 +33,18 @@ describe Tile do
       Tile.new(:Goal).tap { |tile| Box.new tile }
     end
 
-    it "can add a second inhabitant" do
+    it "can add a second inhabitant (one solid)" do
       tile.inhabitants.count.must_equal 2
     end
 
     it "sorts inhabitants after adding a new one" do
       tile.inhabitants_classes.must_equal [Box, Goal]
+    end
+
+    it "can't add a second solid inhabitant" do
+      tile = Tile.new :Player
+      err = ->{ tile.place Box.new }.must_raise RuntimeError
+      err.message.must_match /already has a solid inhabitant/
     end
   end
 
