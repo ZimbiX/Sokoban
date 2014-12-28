@@ -2,15 +2,27 @@ class Tile
   attr_accessor :inhabitants
   attr_accessor :board
 
-  def initialize tile_content = nil
+  def initialize *tile_content_args
     @inhabitants = []
-    objs =
-      case tile_content
-      when String then GAME_ASCII.key(tile_content)
-      when Array then tile_content
-      end
-    objs && objs.each do |obj|
-      Kernel.const_get(obj).new(self)
+    # Flatten (legacy support TODO: remove) and remove nils
+    tile_content = tile_content_args.flatten.compact
+
+    # Existing pieces to add to this tile
+    pieces = tile_content.select { |x| x.is_a? Piece }
+    # A game ASCII character to be converted to the list of piece class types to create
+    ascii = tile_content.select { |x| x.is_a? String }
+    # Piece class types to create
+    classes = tile_content - ascii - pieces
+
+    # Add the existing pieces to this tile
+    pieces.each { |p| p.place self }
+
+    # Add to the existing list of piece class types to create
+    classes += ascii.map { |char| GAME_ASCII.key char }.flatten
+
+    # Create the pieces from the list of classes, with each adding itself to this tile
+    classes.each do |klass|
+      Kernel.const_get(klass).new self
     end
   end
 
