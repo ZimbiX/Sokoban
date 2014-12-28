@@ -14,7 +14,7 @@ class Tile
     classes = tile_content - ascii - pieces
 
     # Add the existing pieces to this tile
-    pieces.each { |p| p.place self }
+    pieces.each { |p| place p }
 
     # Add to the existing list of piece class types to create
     classes += ascii.map { |char| GAME_ASCII.key char }.flatten

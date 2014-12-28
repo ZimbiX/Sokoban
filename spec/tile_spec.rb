@@ -12,6 +12,13 @@ describe Tile do
       tile = Tile.new :Box, :Goal
       tile.inhabitants_classes.must_equal [Box, Goal]
     end
+
+    it "adds existing pieces as inhabitants" do
+      box = Box.new
+      goal = Goal.new
+      tile = Tile.new goal, box
+      tile.inhabitants_classes.must_equal [Box, Goal]
+    end
   end
 
   describe ".place" do
