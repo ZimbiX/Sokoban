@@ -51,6 +51,15 @@ describe Board do
       board.tile_coordinates(tile).must_equal coords
     end
 
+    it "returns the coordinates of a newly-assigned tile" do
+      board = Board.new 3, 3
+      coords = [2,1]
+      [Tile.new, board.new_tile].each do |tile|
+        board[*coords] = tile
+        board.tile_coordinates(tile).must_equal coords
+      end
+    end
+
     it "returns nil when the tile is not in the board" do
       board = Board.new 3, 3
       tile = Tile.new
