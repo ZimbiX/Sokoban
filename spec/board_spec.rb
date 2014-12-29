@@ -2,11 +2,36 @@ require 'require_all'
 require_rel './spec_helper.rb'
 
 describe Board do
+  describe Matrix do
+    it "Creates a Matrix with the axis corrected" do
+      matrix = Matrix.build(1, 3) { nil }
+      matrix.width.must_equal 1
+      matrix.height.must_equal 3
+    end
+
+    it "can return an array of rows" do
+      matrix = Matrix.build(1, 3) { nil }
+      matrix.to_a_of_rows.size.must_equal 3
+    end
+  end
+
   describe ".new" do
     it "assigns the board to the new tiles" do
       board = Board.new 1, 1
       board[0,0].board.must_equal board
     end
+  end
+
+  it "gets the width and height correct" do
+    board = Board.new 1, 5
+    board.width.must_equal 1
+    board.height.must_equal 5
+    board[0,4].wont_equal nil
+    board[0,5].must_equal nil
+    board[1,0].must_equal nil
+    tile = Tile.new
+    board[0,4] = tile
+    board[0,4].must_equal tile
   end
 
   describe "assigning and returning a tile" do

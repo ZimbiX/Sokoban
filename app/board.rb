@@ -4,6 +4,11 @@ class Matrix
   # Make Matrix mutable
   public :"[]=", :set_element, :set_component
 
+  # The Matrix documentation on ruby-doc.org appears to be incorrect; method argument orders are not actually reversed as: y,x / row,column. Rather, everything is in x,y / column,row form
+
+  alias_method :width, :row_size # The number of rows
+  alias_method :height, :column_size # The number of columns
+
   def to_a_of_rows
     # Transpose (swap axis) so we are given an array of rows rather than an array of columns
     transpose.to_a
@@ -15,15 +20,14 @@ class Matrix
 
   # Allow prevention of Matrix's handling of negative coordinates
   def coordinates_valid? x, y
-    (0..row_size-1).include?(x) &&
-    (0..column_size-1).include?(y)
+    (0..width-1 ).include?(x) &&
+    (0..height-1).include?(y)
   end
 end
 
 class Board
   def initialize width, height
-    # Argument order is y,x: Matrix.build(rows, columns)
-    @tiles = Matrix.build(height, width) do
+    @tiles = Matrix.build(width, height) do
       Tile.new.tap do |tile|
         tile.board = self
       end
