@@ -25,6 +25,14 @@ class Matrix
   end
 end
 
+class String
+  def remove_nth_char_from_lines n
+    self.split("\n").map do |line|
+      line.chars.select.with_index { |_,i| (i+1) % n != 0 }.join
+    end.join "\n"
+  end
+end
+
 class Board
   def initialize width, height
     @tiles = Matrix.build(width, height) do
@@ -69,13 +77,14 @@ class Board
   end
 
   def self.load_from_ascii ascii_raw
-    ascii = ascii_raw.split.map { |row| row.chars.to_a }
-    width = ascii.group_by(&:size).max.first
-    height = ascii.size
-    board = Board.new width, height
-    ascii.each_with_index do |row_ascii, y|
-      row_ascii.each_with_index do |tile_ascii, x|
-        board[x,y] = Tile.new tile_ascii
+    lines = ascii_raw.remove_nth_char_from_lines(2).split("\n")
+    width = lines.group_by(&:size).max.first
+    height = lines.size
+    Board.new(width, height).tap do |board|
+      lines.each_with_index do |row_ascii, y|
+        row_ascii.chars.each_with_index do |tile_ascii, x|
+          board[x,y] = Tile.new tile_ascii
+        end
       end
     end
   end

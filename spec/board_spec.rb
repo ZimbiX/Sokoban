@@ -125,10 +125,11 @@ describe Board do
 #       -     #
 # # # # # # # #
 END
+      level_ascii.chomp!
       board = Board.load_from_ascii level_ascii
       board.width.must_equal 8
       board.height.must_equal 9
-      board.to_s.must_equal level_ascii.lines.to_a.map(&:rstrip)
+      board.to_s.lines.to_a.map(&:rstrip).join("\n").must_equal level_ascii
     end
   end
 end
