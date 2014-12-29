@@ -85,4 +85,25 @@ describe Board do
       Tile.new.board.must_equal nil
     end
   end
+
+  describe ".load_from_ascii" do
+    it "creates a board such that its I/O is the same" do
+      level_ascii =
+<<-END
+    # # # # #
+# # #       #
+# - $ 0     #
+# # #   0 - #
+# - # # 0   #
+#   #   -   #
+# 0   8 0 0 - #
+#       -     #
+# # # # # # # #
+END
+      board = Board.load_from_ascii level_ascii
+      board.width.must_equal 8
+      board.height.must_equal 9
+      board.to_s.must_equal level_ascii.lines.to_a.map(&:rstrip)
+    end
+  end
 end

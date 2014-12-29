@@ -1,0 +1,3 @@
+class ImmovablePiece < Piece
+
+end

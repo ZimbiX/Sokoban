@@ -30,6 +30,14 @@ class Board
     end
   end
 
+  def width
+    @tiles.row_size
+  end
+
+  def height
+    @tiles.column_size
+  end
+
   def [] x, y
     if @tiles.coordinates_valid? x, y
       @tiles[x,y]
@@ -56,16 +64,20 @@ class Board
     @tiles.render " ", "\n"
   end
 
-  def self.load_from_file file_path
-    content = File.read(file_path).split.map { |row| row.chars.to_a }
-    width = content.group_by(&:size).max.first
-    height = content.size
+  def self.load_from_ascii ascii_raw
+    ascii = ascii_raw.split.map { |row| row.chars.to_a }
+    width = ascii.group_by(&:size).max.first
+    height = ascii.size
     board = Board.new width, height
-    content.each_with_index do |row_content, y|
-      row_content.each_with_index do |tile_content, x|
-        board[x,y] = Tile.new tile_content
+    ascii.each_with_index do |row_ascii, y|
+      row_ascii.each_with_index do |tile_ascii, x|
+        board[x,y] = Tile.new tile_ascii
       end
     end
+  end
+
+  def self.load_from_file file_path
+    load_from_ascii File.read(file_path)
   end
 
   def new_tile tile_content = nil

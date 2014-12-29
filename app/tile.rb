@@ -74,11 +74,12 @@ class Tile
   def move_solid_inhabitant direction, shove_power
     if free?
       true # Nothing to move; all good for something to move into this tile
-    elsif shove_power == 0
-      false # There's something here, but we're out of shove power; move nothing
+    elsif shove_power == 0 || s = solid_inhabitant && s.is_a?(ImmovablePiece)
+      false # There's something here, but we can't move it; move nothing
     else
       # Attempt to recursively move/shove in this direction
-      if adjacent_tile(direction).move_solid_inhabitant(direction, shove_power-1)
+      recursive_move_success = adjacent_tile(direction).move_solid_inhabitant(direction, shove_power-1)
+      if recursive_move_success
         # All the pieces in this direction are now out of the way
         # Move this piece to the next tile
         piece = take
