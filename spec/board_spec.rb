@@ -111,25 +111,54 @@ describe Board do
     end
   end
 
-  describe ".load_from_ascii" do
-    it "creates a board such that its I/O is the same" do
-      level_ascii =
-<<-END
+  let(:level_ascii) {
+    ascii = <<-END
     # # # # #
 # # #       #
 # - $ 0     #
 # # #   0 - #
 # - # # 0   #
-#   #   -   #
+#   #   -   # #
 # 0   8 0 0 - #
 #       -     #
 # # # # # # # #
 END
-      level_ascii.chomp!
+    ascii.chomp
+  }
+
+  describe ".load_from_ascii" do
+    it "creates a board such that its I/O is the same" do
       board = Board.load_from_ascii level_ascii
       board.width.must_equal 8
       board.height.must_equal 9
       board.to_s.lines.to_a.map(&:rstrip).join("\n").must_equal level_ascii
     end
+  end
+
+  it "can find its player piece" do
+    board = Board.new 1, 1
+    board[0,0] = Tile.new GAME_ASCII[[:Player]]
+    board[0,0].solid_inhabitant.must_be_instance_of Player
+    board.player.must_be_instance_of Player
+
+    board = Board.load_from_ascii GAME_ASCII[[:Player]]
+    board[0,0].solid_inhabitant.must_be_instance_of Player
+    board.player.must_be_instance_of Player
+  end
+
+  it "can shove a box in a level" do
+    board = Board.load_from_ascii level_ascii
+    player = board.player
+    player.must_be_instance_of Player
+    box = player.tile.adjacent_tile(RIGHT).solid_inhabitant
+    box.must_be_instance_of Box
+    coords_start_player = Vector.elements player.coords
+    coords_start_box = Vector.elements box.coords
+    coords_delta_right = Vector.elements RIGHT
+    player.move RIGHT
+    coords_end_player = player.coords
+    coords_end_box = box.coords
+    coords_end_player.must_equal (coords_start_player + coords_delta_right).to_a
+    coords_end_box.must_equal    (coords_start_box    + coords_delta_right).to_a
   end
 end

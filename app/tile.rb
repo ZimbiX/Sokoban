@@ -93,6 +93,10 @@ class Tile
     end
   end
 
+  def coords
+    board.tile_coordinates self
+  end
+
   def to_s
     GAME_ASCII[inhabitants_classes_symbols]
   end

@@ -35,11 +35,14 @@ end
 
 class Board
   def initialize width, height
-    @tiles = Matrix.build(width, height) do
-      Tile.new.tap do |tile|
-        tile.board = self
-      end
-    end
+    @tiles = Matrix.build(width, height) { new_tile }
+  end
+
+  def player
+    @player ||= (
+      player_tile = @tiles.select { |t| t.solid_inhabitant.is_a? Player }.first
+      player_tile && player_tile.solid_inhabitant
+    )
   end
 
   def width
@@ -83,7 +86,7 @@ class Board
     Board.new(width, height).tap do |board|
       lines.each_with_index do |row_ascii, y|
         row_ascii.chars.each_with_index do |tile_ascii, x|
-          board[x,y] = Tile.new tile_ascii
+          board[x,y] = board.new_tile tile_ascii
         end
       end
     end

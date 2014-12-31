@@ -9,4 +9,8 @@ class Piece
   def solid?
     SOLID_PIECES.include? self.class.name.to_sym
   end
+
+  def coords
+    tile.coords
+  end
 end
