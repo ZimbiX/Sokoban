@@ -136,6 +136,16 @@ describe Tile do
         move_success.must_equal true
         row_tri_inhabitants.call(board).must_equal [nil, box1, box2]
       end
+
+      it "won't move a wall" do
+        board = Board.new 2, 1
+        tile1 = board[0,0]
+        tile2 = board[1,0]
+        wall = Wall.new
+        tile1.place wall
+        tile1.move_solid_inhabitant RIGHT, 1
+        wall.coords.must_equal tile1.coords
+      end
     end
 
     describe "with a player" do
