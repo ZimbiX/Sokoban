@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.2.0'
 
 gem 'require_all'
 
 group :development do
-  gem 'jazz_hands'
+  gem 'jazz_fingers'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'guard-minitest'
