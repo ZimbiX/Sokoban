@@ -26,3 +26,7 @@ guard :minitest do
   # watch(%r{^app/helpers/(.*)\.rb$})     { |m| "test/helpers/#{m[1]}_test.rb" }
   # watch(%r{^app/models/(.*)\.rb$})      { |m| "test/unit/#{m[1]}_test.rb" }
 end
+
+guard :rake, :task => 'install_sublime_text_level_syntax' do
+  watch(%r{^sublime-text/Sokoban-Level.tmLanguage})
+end
