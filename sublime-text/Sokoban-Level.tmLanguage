@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>sokoban</string>
+		<string>sokoban-level</string>
+	</array>
+	<key>name</key>
+	<string>Sokoban Level</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>comment</key>
+			<string>Walls</string>
+			<key>match</key>
+			<string>\#( \#)*</string>
+			<key>name</key>
+			<string>invalid.deprecated</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Goals</string>
+			<key>match</key>
+			<string>\-</string>
+			<key>name</key>
+			<string>keyword.control</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Player</string>
+			<key>match</key>
+			<string>\$</string>
+			<key>name</key>
+			<string>string.quoted</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Goals</string>
+			<key>match</key>
+			<string>0</string>
+			<key>name</key>
+			<string>string.quoted</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.sokoban_level</string>
+	<key>uuid</key>
+	<string>f32099d9-52d0-4ac6-95ec-6b903be57ddd</string>
+</dict>
+</plist>
