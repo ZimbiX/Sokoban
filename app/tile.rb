@@ -7,6 +7,7 @@ class Tile
   # - Symbolised class name, e.g., for Player: :Player
   # - Piece instance, e.g., for Player: Player.new
   # The referenced piece type will be created unless it is already a Piece instance
+  # Note that each tile can contain multiple non-solid inhabitants, but only a single solid one
   def initialize *tile_content_args
     @inhabitants = []
     tile_content = tile_content_args.compact # Remove nils
