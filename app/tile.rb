@@ -2,6 +2,11 @@ class Tile
   attr_accessor :inhabitants
   attr_accessor :board
 
+  # When creating a tile, inhabitant information can be provided through the argument list. This can be provided in various mixed formats:
+  # - Game ASCII, e.g., for Player: '$'
+  # - Symbolised class name, e.g., for Player: :Player
+  # - Piece instance, e.g., for Player: Player.new
+  # The referenced piece type will be created unless it is already a Piece instance
   def initialize *tile_content_args
     @inhabitants = []
     tile_content = tile_content_args.compact # Remove nils
